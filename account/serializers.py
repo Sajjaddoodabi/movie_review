@@ -47,6 +47,9 @@ class UserRegisterView(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.Meta.model.objects.create(**self.clean_validated_data(validated_data))
+        user.password = make_password(validated_data.get('password'))
+        user.save()
+
         return user
 
 
