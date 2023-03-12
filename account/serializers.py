@@ -1,5 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from account.models import User
@@ -78,16 +79,10 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         validate_password(attrs.get('new_password'))
-
         if attrs.get('new_password') != attrs.get('confirm_password'):
-            raise serializers.ValidationError('password and confirm password does NOT match!')
+            raise serializers.ValidationError(_('password and confirm password do not match'))
 
         return attrs
 
-    def update(self, instance, validated_data):
-        if instance.check_password(validated_data.get('current_password')):
-            instance.password = make_password(validated_data.get('new_password'))
-            instance.save()
-            return instance
 
-        raise serializers.ValidationError('password and current password does NOT match!')
+
