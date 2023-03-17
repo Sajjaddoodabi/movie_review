@@ -8,7 +8,7 @@ from account.models import User
 
 
 class Genre(models.Model):
-    title = models.CharField(max_length=100, verbose_name=_('title'))
+    title = models.CharField(max_length=100, verbose_name=_('title'), unique=True)
     is_active = models.BooleanField(default=False, verbose_name=_('is_active'))
 
     def __str__(self):

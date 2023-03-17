@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     # internal apps
     'account',
     'movies',
+    'series',
+    'cast_and_crew'
 ]
 
 MIDDLEWARE = [
