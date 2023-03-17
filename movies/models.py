@@ -45,6 +45,7 @@ class Movie(models.Model):
         default=1,
         verbose_name=_('rate')
     )
+    is_active = models.BooleanField(default=False, verbose_name=_('is_active'))
 
     def __str__(self):
         return f'{self.title} - {self.year} - {self.imdb_rate}'
