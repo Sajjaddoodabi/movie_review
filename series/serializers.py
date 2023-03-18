@@ -13,6 +13,15 @@ class SerialSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'rate', 'is_active', 'season_count')
 
 
+class SerialMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Series
+        fields = (
+            'id', 'title', 'genre', 'country_made', 'type', 'year', 'rate', 'is_active'
+        )
+        read_only_fields = ('id', 'rate', 'is_active')
+
+
 class CommentSerializer(serializers.ModelSerializer):
     serial = serializers.CharField(source='serial.title')
     user = serializers.CharField(source='user.username', read_only=True)
