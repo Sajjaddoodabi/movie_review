@@ -22,7 +22,7 @@ class SerialMiniSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'rate', 'is_active')
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class SerialCommentSerializer(serializers.ModelSerializer):
     serial = serializers.CharField(source='serial.title')
     user = serializers.CharField(source='user.username', read_only=True)
 
