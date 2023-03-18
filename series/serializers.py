@@ -16,7 +16,7 @@ class SerialMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = Series
         fields = (
-            'id', 'title', 'genre', 'country_made', 'type', 'year', 'rate', 'is_active'
+            'id', 'title', 'genre', 'country_made', 'year', 'rate', 'is_active'
         )
         read_only_fields = ('id', 'rate', 'is_active')
 

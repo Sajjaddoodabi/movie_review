@@ -4,7 +4,7 @@ from movies.models import Movie
 from series.models import Series
 
 
-class Actor(models.Model):
+class BaseCast(models.Model):
     movie = models.ManyToManyField(Movie, related_name='movie_actor', verbose_name=_('movie'))
     serial = models.ManyToManyField(Movie, related_name='serial_actor', verbose_name=_('serial'))
     first_name = models.CharField(max_length=100, verbose_name=_('first name'))
@@ -18,5 +18,10 @@ class Actor(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 
+class Actor(models.Model):
+    base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='actor', verbose_name=_('director'))
+
+
 class Director(models.Model):
-    pass
+    base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='director', verbose_name=_('director'))
+

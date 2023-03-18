@@ -14,7 +14,6 @@ class Series(models.Model):
     description = models.TextField(verbose_name=_('description'))
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)
     country_made = models.CharField(max_length=100, verbose_name=_('country'))
-    type = models.CharField(max_length=50, verbose_name=_('type'))
     seasons_count = models.PositiveIntegerField(default=0, verbose_name=_('seasons count'))
     year = models.PositiveIntegerField(
         validators=[
