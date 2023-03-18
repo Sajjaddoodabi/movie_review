@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from account.models import User
+from cast_and_crew.models import Actor, Director
 
 
 class Genre(models.Model):
@@ -17,6 +18,8 @@ class Genre(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
+    director = models.ForeignKey(Director, on_delete=models.DO_NOTHING, related_name='director_movie', verbose_name=_('director'))
+    actor = models.ManyToManyField(Actor, related_name='actor_movie', verbose_name=_('actor'))
     genre = models.ManyToManyField(Genre, related_name='movie_genre', verbose_name=_('genre'))
     description = models.TextField(verbose_name=_('description'))
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)

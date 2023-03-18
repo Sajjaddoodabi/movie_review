@@ -77,3 +77,11 @@ class UpdateMovieRate(APIView):
 
         response = {'detail': f'movie rate updated to {movie.rate}!'}
         return Response(response)
+
+
+class AddMovieDirector(APIView):
+    pass
+
+
+class AddMovieCast(APIView):
+    pass

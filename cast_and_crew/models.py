@@ -1,12 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from movies.models import Movie
-from series.models import Series
 
 
 class BaseCast(models.Model):
-    movie = models.ManyToManyField(Movie, related_name='movie_actor', verbose_name=_('movie'))
-    serial = models.ManyToManyField(Movie, related_name='serial_actor', verbose_name=_('serial'))
     first_name = models.CharField(max_length=100, verbose_name=_('first name'))
     last_name = models.CharField(max_length=100, verbose_name=_('last name'))
     age = models.CharField(max_length=100, verbose_name=_('age'))
@@ -19,7 +15,7 @@ class BaseCast(models.Model):
 
 
 class Actor(models.Model):
-    base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='actor', verbose_name=_('director'))
+    base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='actor', verbose_name=_('actor'))
 
     def __str__(self):
         return self.base

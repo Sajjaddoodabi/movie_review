@@ -6,10 +6,13 @@ from django.utils.translation import gettext_lazy as _
 
 from account.models import User
 from movies.models import Genre
+from cast_and_crew.models import Actor, Director
 
 
 class Series(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
+    director = models.ForeignKey(Director, on_delete=models.DO_NOTHING, related_name='director_serial', verbose_name=_('director'))
+    actor = models.ManyToManyField(Actor,related_name='actor_serial', verbose_name=_('actor'))
     genre = models.ManyToManyField(Genre, related_name='serial_genre', verbose_name=_('genre'))
     description = models.TextField(verbose_name=_('description'))
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)
