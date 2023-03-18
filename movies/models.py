@@ -53,7 +53,7 @@ class Movie(models.Model):
 
 
 class MovieComment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment', verbose_name=_('user'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='movie_comment', verbose_name=_('user'))
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_comment', verbose_name=_('movie'))
     title = models.CharField(max_length=100, verbose_name=_('title'))
     comment = models.TextField(max_length=500, verbose_name=_('comment'))
