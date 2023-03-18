@@ -34,12 +34,10 @@ class SerialCommentSerializer(serializers.ModelSerializer):
 
 class EpisodeSerializer(serializers.ModelSerializer):
     serial = serializers.CharField(source='serial.title')
-    comments = serializers.HyperlinkedIdentityField(many=True, read_only=True, view_name='comment_detail')
 
     class Meta:
         model = Episode
         fields = (
             'id', 'serial', 'title', 'episode_number', 'summary', 'date_released', 'watch_time', 'rate', 'is_active',
-            'comments'
         )
         read_only_fields = ('id', 'rate', 'is_active')
