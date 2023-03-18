@@ -17,7 +17,7 @@ class Genre(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
-    genre = models.ManyToManyField(Genre, related_name='base', verbose_name=_('genre'))
+    genre = models.ManyToManyField(Genre, related_name='movie_genre', verbose_name=_('genre'))
     description = models.TextField(verbose_name=_('description'))
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)
     country_made = models.CharField(max_length=100, verbose_name=_('country'))
@@ -50,3 +50,22 @@ class Movie(models.Model):
 
     def __str__(self):
         return f'{self.title} - {self.year} - {self.imdb_rate}'
+
+
+class MovieComment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment', verbose_name=_('user'))
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_comment', verbose_name=_('movie'))
+    title = models.CharField(max_length=100, verbose_name=_('title'))
+    comment = models.TextField(max_length=500, verbose_name=_('comment'))
+    rate = models.PositiveIntegerField(validators=[
+        MinValueValidator(1),
+        MaxValueValidator(10)
+    ],
+        default=1,
+        verbose_name=_('rate')
+    )
+    is_approve = models.BooleanField(default=False, verbose_name=_('is_approve'))
+    is_active = models.BooleanField(default=False, verbose_name=_('is_active'))
+
+    def __str__(self):
+        return f'{self.user} - {self.movie.title}'
