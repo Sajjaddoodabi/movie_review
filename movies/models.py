@@ -22,6 +22,7 @@ class Movie(models.Model):
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)
     country_made = models.CharField(max_length=100, verbose_name=_('country'))
     type = models.CharField(max_length=50, verbose_name=_('type'))
+    watch_time = models.CharField(max_length=20, verbose_name=_('watch time'))
     year = models.PositiveIntegerField(
         validators=[
             MinValueValidator(1800),
