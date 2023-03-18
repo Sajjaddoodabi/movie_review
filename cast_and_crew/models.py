@@ -13,6 +13,9 @@ class BaseCast(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Actor(models.Model):
     base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='actor', verbose_name=_('actor'))
