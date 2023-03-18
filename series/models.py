@@ -59,6 +59,7 @@ class Episode(models.Model):
         default=1,
         verbose_name=_('rate')
     )
+    poster = models.ImageField(upload_to='images/', default='images/default.png', verbose_name=_('poster'))
     is_active = models.BooleanField(default=False, verbose_name=_('is_active'))
 
     def __str__(self):

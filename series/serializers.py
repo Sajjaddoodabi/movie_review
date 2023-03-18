@@ -7,10 +7,9 @@ class SerialSerializer(serializers.ModelSerializer):
         model = Series
         fields = (
             'id', 'title', 'genre', 'description', 'review', 'country_made', 'type', 'year', 'seasons_count',
-            'imdb_rate', 'rate',
-            'is_active'
+            'imdb_rate', 'rate', 'poster', 'is_active'
         )
-        read_only_fields = ('id', 'rate', 'is_active', 'season_count')
+        read_only_fields = ('id', 'rate', 'is_active', 'season_count', 'poster')
 
 
 class SerialMiniSerializer(serializers.ModelSerializer):
