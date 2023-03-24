@@ -36,6 +36,21 @@ class UpdateMovieRate(APIView):
         return Response(response)
 
 
+class MovieCommentView(APIView):
+    def post(self, request, pk):
+        pass
+
+
+class MovieCommentDetailView(APIView):
+    def get(self, request, pk):
+        pass
+
+    def patch(self, request, pk):
+        pass
+
+    def delete(self, request, pk):
+        pass
+
 
 
 
