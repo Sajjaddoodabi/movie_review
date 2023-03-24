@@ -43,13 +43,43 @@ class MovieCommentView(APIView):
 
 class MovieCommentDetailView(APIView):
     def get(self, request, pk):
-        pass
+        comment = MovieComment.objects.filter(pk=pk).first()
+        if not comment:
+            response = {'detail': 'comment NOT found!'}
+            return Response(response)
+
+        serializer = MovieCommentSerializer(comment)
+        return Response(serializer.data)
 
     def patch(self, request, pk):
-        pass
+        comment = MovieComment.objects.filter(pk=pk).first()
+        if not comment:
+            response = {'detail': 'comment NOT found!'}
+            return Response(response)
+
+        try:
+            comment_text = request.data['comment']
+        except Exception as e:
+            response = {'detail': str(e)}
+            return Response(response)
+
+        comment.comment = comment_text
+        comment.is_approve = False
+        comment.save()
+
+        serializer = MovieCommentSerializer(comment)
+        return Response(serializer.data)
 
     def delete(self, request, pk):
-        pass
+        comment = MovieComment.objects.filter(pk=pk).first()
+        if not comment:
+            response = {'detail': 'comment NOT found!'}
+            return Response(response)
+
+        comment.delete()
+
+        response = {'detail': 'comment successfully deleted!'}
+        return Response(response)
 
 
 class MovieCommentListView(ListAPIView):
