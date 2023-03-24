@@ -52,6 +52,25 @@ class MovieCommentDetailView(APIView):
         pass
 
 
+class MovieCommentListView(ListAPIView):
+    serializer_class = MovieCommentSerializer
+
+    def get_queryset(self):
+        return MovieComment.objects.filter(movie_id=self.kwargs['pk'], is_active=True, is_approve=True)
+
+
+class MovieCommentNotApprovedListView(ListAPIView):
+    serializer_class = MovieCommentSerializer
+
+    def get_queryset(self):
+        return MovieComment.objects.filter(movie_id=self.kwargs['pk'], is_active=True, is_approve=False)
+
+
+class AllMovieCommentListView(ListAPIView):
+    serializer_class = MovieCommentSerializer
+    queryset = MovieComment.objects.all()
+
+
 
 
 class AddMovieDirector(APIView):
