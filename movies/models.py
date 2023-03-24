@@ -18,8 +18,8 @@ class Genre(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
-    director = models.ForeignKey(Director, on_delete=models.DO_NOTHING, related_name='director_movie', verbose_name=_('director'))
-    actor = models.ManyToManyField(Actor, related_name='actor_movie', verbose_name=_('actor'))
+    director = models.ForeignKey(Director, on_delete=models.DO_NOTHING, related_name='director_movie', verbose_name=_('director'), null=True, blank=True)
+    actor = models.ManyToManyField(Actor, related_name='actor_movie', verbose_name=_('actor'), null=True, blank=True)
     genre = models.ManyToManyField(Genre, related_name='movie_genre', verbose_name=_('genre'))
     description = models.TextField(verbose_name=_('description'))
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)
@@ -71,4 +71,4 @@ class MovieComment(models.Model):
     is_active = models.BooleanField(default=False, verbose_name=_('is_active'))
 
     def __str__(self):
-        return f'{self.user} - {self.movie.title}'
+        return f'{self.user.username} - {self.movie.title}'

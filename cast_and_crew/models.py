@@ -21,12 +21,12 @@ class Actor(models.Model):
     base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='actor', verbose_name=_('actor'))
 
     def __str__(self):
-        return self.base
+        return self.base.get_full_name()
 
 
 class Director(models.Model):
     base = models.OneToOneField(BaseCast, on_delete=models.CASCADE, related_name='director', verbose_name=_('director'))
 
     def __str__(self):
-        return self.base
+        return self.base.get_full_name()
 
