@@ -34,14 +34,14 @@ class Movie(models.Model):
         blank=True,
         verbose_name=_('year')
     )
-    imdb_rate = models.PositiveIntegerField(validators=[
+    imdb_rate = models.FloatField(validators=[
         MinValueValidator(1),
         MaxValueValidator(10)
     ],
         default=1,
         verbose_name=_('imdb_rate')
     )
-    rate = models.PositiveIntegerField(validators=[
+    rate = models.FloatField(validators=[
         MinValueValidator(1),
         MaxValueValidator(10)
     ],
@@ -60,7 +60,7 @@ class MovieComment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_comment', verbose_name=_('movie'))
     title = models.CharField(max_length=100, verbose_name=_('title'))
     comment = models.TextField(max_length=500, verbose_name=_('comment'))
-    rate = models.PositiveIntegerField(validators=[
+    rate = models.FloatField(validators=[
         MinValueValidator(1),
         MaxValueValidator(10)
     ],

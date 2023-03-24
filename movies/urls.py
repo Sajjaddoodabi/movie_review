@@ -9,5 +9,7 @@ router.register('genre', GenreViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('<int:pk>/comments/add-comment/', MovieCommentView.as_view(), name='add_comment'),
     path('<int:pk>/comments/', MovieCommentListView.as_view(), name='movie_comment_list'),
+    path('comments/<int:pk>/approve-comment/', ApproveCommentView.as_view(), name='approve_comment'),
 ]

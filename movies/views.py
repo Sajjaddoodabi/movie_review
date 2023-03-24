@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -38,7 +39,35 @@ class UpdateMovieRate(APIView):
 
 class MovieCommentView(APIView):
     def post(self, request, pk):
-        pass
+        serializer = MovieCommentSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            movie = Movie.objects.filter(pk=pk).first()
+
+            if user.is_anonymous:
+                raise AuthenticationFailed('unauthenticated')
+            if not movie:
+                response = {'detail': 'movie Not found!'}
+                return Response(response)
+
+            title = serializer.data['title']
+            text = serializer.data['comment']
+            rate = serializer.data['rate']
+
+            try:
+                comment = MovieComment.objects.create(user_id=user.id, movie_id=movie.id, title=title, comment=text,
+                                                      rate=rate)
+            except Exception as e:
+                response = {'detail': str(e)}
+                return Response(response)
+
+            movie.rate = round((movie.rate + rate) / 2, 2)
+            movie.save()
+
+            serializer = MovieCommentSerializer(comment)
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
 
 
 class MovieCommentDetailView(APIView):

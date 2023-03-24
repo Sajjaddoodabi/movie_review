@@ -30,7 +30,7 @@ class MovieMiniSerializer(serializers.ModelSerializer):
 
 
 class MovieCommentSerializer(serializers.ModelSerializer):
-    movie = serializers.CharField(source='movie.title')
+    movie = serializers.CharField(source='movie.title', read_only=True)
     user = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
