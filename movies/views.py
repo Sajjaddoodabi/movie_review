@@ -71,6 +71,22 @@ class AllMovieCommentListView(ListAPIView):
     queryset = MovieComment.objects.all()
 
 
+class ApproveCommentView(APIView):
+    def patch(self, request, pk):
+        comment = MovieComment.objects.filter(pk=pk).first()
+        if not comment:
+            response = {'detail': 'comment NOT found!'}
+            return Response(response)
+
+        if comment.is_approve:
+            response = {'detail': 'comment already approved!'}
+            return Response(response)
+
+        comment.is_approve = True
+        comment.save()
+
+        response = {'detail': 'comment approved!'}
+        return Response(response)
 
 
 class AddMovieDirector(APIView):
