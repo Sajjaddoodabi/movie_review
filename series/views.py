@@ -23,3 +23,11 @@ class SerialCommentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['POST'])
     def approve_comment(self, request, pk):
         pass
+
+
+class AddCastToSerial(APIView):
+    pass
+
+
+class AddDirectorToSerial(APIView):
+    pass
