@@ -18,25 +18,6 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
 
 
-class UpdateMovieRate(APIView):
-    def post(self, request, movie_id):
-        rate = request.data['rate']
-        if rate > 10 or rate < 0:
-            response = {'detail': 'rate input is invalid!'}
-            return Response(response)
-
-        movie = Movie.objects.filter(id=movie_id).first()
-        if not movie:
-            response = {'detail': 'movie Not found!'}
-            return Response(response)
-
-        movie.rate = (movie.rate + rate) / 2
-        movie.save()
-
-        response = {'detail': f'movie rate updated to {movie.rate}!'}
-        return Response(response)
-
-
 class MovieCommentView(APIView):
     def post(self, request, pk):
         serializer = MovieCommentSerializer(data=request.data)
@@ -71,8 +52,8 @@ class MovieCommentView(APIView):
 
 
 class MovieCommentDetailView(APIView):
-    def get(self, request, pk):
-        comment = MovieComment.objects.filter(pk=pk).first()
+    def get(self, request, id):
+        comment = MovieComment.objects.filter(id=id).first()
         if not comment:
             response = {'detail': 'comment NOT found!'}
             return Response(response)
@@ -80,8 +61,8 @@ class MovieCommentDetailView(APIView):
         serializer = MovieCommentSerializer(comment)
         return Response(serializer.data)
 
-    def patch(self, request, pk):
-        comment = MovieComment.objects.filter(pk=pk).first()
+    def patch(self, request, id):
+        comment = MovieComment.objects.filter(id=id).first()
         if not comment:
             response = {'detail': 'comment NOT found!'}
             return Response(response)
@@ -99,8 +80,8 @@ class MovieCommentDetailView(APIView):
         serializer = MovieCommentSerializer(comment)
         return Response(serializer.data)
 
-    def delete(self, request, pk):
-        comment = MovieComment.objects.filter(pk=pk).first()
+    def delete(self, request, id):
+        comment = MovieComment.objects.filter(id=id).first()
         if not comment:
             response = {'detail': 'comment NOT found!'}
             return Response(response)
