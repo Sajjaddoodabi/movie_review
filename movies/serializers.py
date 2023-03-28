@@ -12,6 +12,7 @@ class GenreSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     actor = serializers.SerializerMethodField()
     director = serializers.CharField(source='director.get_full_name', read_only=True)
+    genre = serializers.SerializerMethodField()
 
     class Meta:
         model = Movie
@@ -23,6 +24,13 @@ class MovieSerializer(serializers.ModelSerializer):
         response = []
         for actor in obj.actor.all():
             response.append(actor.base.get_full_name())
+
+        return response
+
+    def get_genre(self, obj):
+        response = []
+        for genre in obj.genre.all():
+            response.append(genre.title)
 
         return response
 
