@@ -10,7 +10,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    actor = serializers.CharField(source='actor.get_full_name', read_only=True)
+    actor = serializers.SerializerMethodField()
     director = serializers.CharField(source='director.get_full_name', read_only=True)
 
     class Meta:
@@ -18,6 +18,13 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'genre', 'description', 'review', 'country_made', 'year', 'imdb_rate', 'rate',
                   'poster', 'is_active', 'director', 'actor')
         read_only_fields = ('id', 'rate', 'director', 'actor')
+
+    def get_actor(self, obj):
+        response = []
+        for actor in obj.actor.all():
+            response.append(actor.base.get_full_name())
+
+        return response
 
 
 class MovieMiniSerializer(serializers.ModelSerializer):
