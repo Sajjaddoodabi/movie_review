@@ -11,8 +11,8 @@ from cast_and_crew.models import Actor, Director
 
 class Series(models.Model):
     title = models.CharField(max_length=100, verbose_name=_('title'))
-    director = models.ForeignKey(Director, on_delete=models.DO_NOTHING, related_name='director_serial', verbose_name=_('director'))
-    actor = models.ManyToManyField(Actor,related_name='actor_serial', verbose_name=_('actor'))
+    director = models.ForeignKey(Director, on_delete=models.DO_NOTHING, related_name='director_serial', verbose_name=_('director'), null=True, blank=True)
+    actor = models.ManyToManyField(Actor,related_name='actor_serial', verbose_name=_('actor'), null=True, blank=True)
     genre = models.ManyToManyField(Genre, related_name='serial_genre', verbose_name=_('genre'))
     description = models.TextField(verbose_name=_('description'))
     review = models.TextField(verbose_name=_('review'), null=True, blank=True)
@@ -27,20 +27,21 @@ class Series(models.Model):
         blank=True,
         verbose_name=_('year')
     )
-    imdb_rate = models.PositiveIntegerField(validators=[
+    imdb_rate = models.FloatField(validators=[
         MinValueValidator(1),
         MaxValueValidator(10)
     ],
         default=1,
         verbose_name=_('imdb_rate')
     )
-    rate = models.PositiveIntegerField(validators=[
+    rate = models.FloatField(validators=[
         MinValueValidator(1),
         MaxValueValidator(10)
     ],
         default=1,
         verbose_name=_('rate')
     )
+    poster = models.ImageField(upload_to='images/', default='images/default.png', verbose_name=_('poster'))
     is_active = models.BooleanField(default=False, verbose_name=_('is_active'))
 
     def __str__(self):

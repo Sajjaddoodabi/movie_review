@@ -1,18 +1,26 @@
 from rest_framework import serializers
 from .models import Series, SerialComment, Episode
+from cast_and_crew.serializers import BaseCastSerializer
 
 
 class SerialSerializer(serializers.ModelSerializer):
-    actor = serializers.CharField(source='actor.get_full_name')
-    director = serializers.CharField(source='director.get_full_name')
+    actor = serializers.SerializerMethodField()
+    director = serializers.CharField(source='director.base.get_full_name')
 
     class Meta:
         model = Series
         fields = (
-            'id', 'title', 'genre', 'description', 'review', 'country_made', 'type', 'year', 'seasons_count',
-            'imdb_rate', 'rate', 'poster', 'director', 'actor', 'is_active'
+            'id', 'title', 'genre', 'director', 'actor', 'description', 'review', 'country_made', 'year', 'seasons_count',
+            'imdb_rate', 'rate', 'poster', 'is_active'
         )
         read_only_fields = ('id', 'rate', 'is_active', 'season_count', 'poster', 'director', 'actor')
+
+    def get_actor(self, obj):
+        response = []
+        for actor in obj.actor.all():
+            response.append(actor.base.get_full_name())
+
+        return response
 
 
 class SerialMiniSerializer(serializers.ModelSerializer):
